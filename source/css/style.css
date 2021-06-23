@@ -1,0 +1,189 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* end of reset */
+
+/* ================================================================= */
+/* GENERAL */
+/* ================================================================= */
+
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+a, a:visited, a:hover, a:focus, a:hover, a:active { text-decoration: none; }
+a { color: rgb(255, 255, 255); }
+
+.container { margin: 0 auto; }
+.wrapper-header { height: 116px; }
+.header, .footer { background: #000; color: #fff; /* background: #15181f url(../images/bg-texture.jpg) repeat; */ }
+.middle { background: #000; color: #fff; }
+
+/* === logo === */
+.logo { float: left; /*margin: 1px;*/ }
+.logo-img { height: 93px; }
+
+/* === navigation === */
+
+/*.wrapper-nav { float: left; height: 104px; border-style: solid; border-width: 5px; border-color: rgb(255, 0, 255); }*/
+.nav-pages { display: inline-block; width: 989px; }
+.nav-items { /*margin: auto;*/ /*width: 50%;*/ /*height: 50%;*/ text-align: center; /* margin-left: 270px; */  /*margin-top: 8px; */ }
+.nav-items > li { display: inline-block; padding: 30px; font-family: 'Noto Sans KR', sans-serif; color: #fff; }
+
+.header-empty { float: right; padding: 5px; height: 106px; }
+.empty-items { padding: 30px; font-family: 'Noto Sans KR', sans-serif; color: #fff; }
+
+/* === pages === */
+
+.wrapper-hero { height: 720px; background: #333 url(../img/bg-hero.png) no-repeat 50% 50%; background-size: cover; }
+.wrapper-p2 { height: 1440px; background: #333 url(../img/p02-connected.png) no-repeat 50% 50%; background-size: cover; }
+/*.wrapper-p3 { height: 720px; background: #333 url(../img/p03-desc.jpg) no-repeat 50% 50%; background-size: cover; }*/
+.wrapper-p4 { height: 720px; background: #333 url(../img/p04-ours.jpg) no-repeat 50% 50%; background-size: cover; }
+.p4-box { float: right; height: 720px; width: 400px; padding: 50px; text-align: center; 
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,.8)); opacity: .8; }
+.wrapper-p5 { height: 720px; background: #333 url(../img/p05-map.jpg) no-repeat 50% 50%; background-size: cover; }
+
+/* === border === */
+
+.container { 
+    border-style: solid; border-width: 5px; border-color: red; }
+.wrapper-header { 
+    border-style: solid; border-width: 5px; border-color: blanchedalmond; }
+.logo { 
+    border-style: solid; border-width: 5px; border-color: cadetblue; }
+.logo-img { 
+    border-style: solid; border-width: 5px; border-color: rebeccapurple; }
+.nav-pages { 
+    border-style: solid; border-width: 5px; border-color: rgb(220, 200, 20); }
+.nav-items { 
+    border-style: solid; border-width: 5px; border-color: rebeccapurple; }
+.nav-items > li { 
+    border-style: solid; border-width: 5px; border-color: yellowgreen; }
+.header-empty { 
+    border-style: solid; border-width: 5px; border-color: powderblue; }
+.empty-items { 
+    border-style: solid; border-width: 5px; border-color: palevioletred; }
+
+/* === slides === */
+
+/*.section { border-style: solid; border-width: 5px; border-color: rgb(0, 255, 255); }*/
+/*.section .slidewrap { border-style: solid; border-width: 5px; border-color: indianred; }*/
+/*.section .slidelist > li > a { border-style: solid; border-width: 5px; border-color: rosybrown; }*/
+/*.section .slidelist > li > a img { border-style: solid; border-width: 5px; border-color: skyblue; }*/
+/*.section .slidelist label { border-style: solid; border-width: 5px; border-color: orangered; }*/
+/*.section .slidelist .textbox { border-style: solid; border-width: 5px; border-color: yellow; }*/
+
+.section input[id*="slide"] {display:none;}
+.section .slidewrap {/*max-width:1200px;*/margin:0 auto;}
+.section .slidelist {white-space:nowrap;font-size:0;overflow:hidden;position:relative;}
+.section .slidelist > li {display:inline-block; vertical-align:middle; width:100%;transition:all .5s;}    /* sliding effect */
+.section .slidelist > li > a {display:block;position:relative;}
+.section .slidelist > li > a img {width:100%; /*height: 720px;*/}
+
+/* button & textbox */
+.section .slidelist label { position:absolute;z-index:10; top:50%; transform:translateY(-50%); padding:50px; cursor:pointer; }
+/*.section .slidelist .textbox { position:absolute;z-index:1; top:50%;left:50%;transform:translate(-50%,-50%); line-height:1.6; text-align:center; }*/
+/*.section .slidelist .textbox h3 { font-size:36px; color:#fff; transform:translateY(30px);transition:all .5s; }*/
+/*.section .slidelist .textbox p { font-size:16px; color:#fff; opacity:0; transform:translateY(30px); transition:all .5s; }*/
+
+/* input에 체크되면 슬라이드 효과 */
+.section input[id="slide01"]:checked ~ .slidewrap .slidelist > li {transform:translateX(0%);}
+.section input[id="slide02"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-100%);}
+.section input[id="slide03"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-200%);}
+.section input[id="slide04"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-300%);}
+.section input[id="slide05"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-400%);}
+.section input[id="slide06"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-500%);}
+
+/* input에 체크되면 텍스트 효과 */
+.section input[id="slide01"]:checked ~ .slidewrap li:nth-child(1) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide01"]:checked ~ .slidewrap li:nth-child(1) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+.section input[id="slide02"]:checked ~ .slidewrap li:nth-child(2) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide02"]:checked ~ .slidewrap li:nth-child(2) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+.section input[id="slide03"]:checked ~ .slidewrap li:nth-child(3) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide03"]:checked ~ .slidewrap li:nth-child(3) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+.section input[id="slide04"]:checked ~ .slidewrap li:nth-child(4) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide04"]:checked ~ .slidewrap li:nth-child(4) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+.section input[id="slide05"]:checked ~ .slidewrap li:nth-child(5) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide05"]:checked ~ .slidewrap li:nth-child(5) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+.section input[id="slide06"]:checked ~ .slidewrap li:nth-child(6) .textbox h3 {opacity:1;transform:translateY(0);transition-delay:.2s;}
+.section input[id="slide06"]:checked ~ .slidewrap li:nth-child(6) .textbox p {opacity:1;transform:translateY(0);transition-delay:.4s;}
+
+/* button */
+.slide-control > div {display:none;}
+.section .left {left:30px;background:url('../img/button-left.png') center center / 100% no-repeat;}
+.section .right {right:30px;background:url('../img/button-right.png') center center / 100% no-repeat;}
+.section input[id="slide01"]:checked ~ .slidewrap .slide-control > div:nth-child(1) {display:block;}
+.section input[id="slide02"]:checked ~ .slidewrap .slide-control > div:nth-child(2) {display:block;}
+.section input[id="slide03"]:checked ~ .slidewrap .slide-control > div:nth-child(3) {display:block;}
+.section input[id="slide04"]:checked ~ .slidewrap .slide-control > div:nth-child(4) {display:block;}
+.section input[id="slide05"]:checked ~ .slidewrap .slide-control > div:nth-child(5) {display:block;}
+.section input[id="slide06"]:checked ~ .slidewrap .slide-control > div:nth-child(6) {display:block;}
+
+/* 페이징 */
+/*.slide-pagelist {text-align:center;padding:20px;}*/
+/*.slide-pagelist > li {display:inline-block;vertical-align:middle;}*/
+/*.slide-pagelist > li > label {display:block;padding:8px 30px;border-radius:30px;background:#ccc;margin:20px 10px;cursor:pointer;}*/
+.section input[id="slide01"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(1) > label {background:#999;}
+.section input[id="slide02"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(2) > label {background:#999;}
+.section input[id="slide03"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(3) > label {background:#999;}
+.section input[id="slide04"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(4) > label {background:#999;}
+.section input[id="slide05"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(5) > label {background:#999;}
+.section input[id="slide06"]:checked ~ .slidewrap .slide-pagelist > li:nth-child(5) > label {background:#999;}
+
+/* slide box */
+
+/* test box */
+
+/* .container:after,
+.blocks:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.blocks .block:first-child {
+    margin-left: 0;
+}
+.blocks .block {
+    float: left;
+    width: 300px;
+    margin-left: 43px;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #d9dbdf;
+}
+.blocks .block:first-child {
+    margin-left: 0;
+}
+.blocks .phrase {
+    color: #454e5c;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+.blocks .info {
+    color: #8e959c;
+    font-size: 14px;
+} */
