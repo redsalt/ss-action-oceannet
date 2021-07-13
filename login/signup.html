@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<title>Sign Up</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+    	<section class="login-form">
+    		<a href="../index.php"><h1>SEA SHEPHERD KOREA</h1></a>
+    		<!-- <form action="login.php" method="post"> -->
+    		<form action="signup.php" method="post">
+    			<div class="int-area">
+    				<input type="email" name="email" id="email" autocomplete="off" required>
+    				<label for="email">이메일</label>
+    			</div>
+    			<!-- <div class="int-area">
+    				<input type="password" name="pw" id="pw" autocomplete="off" required>
+    				<label for="pw">비밀번호</label>
+    			</div>
+    			<div class="int-area">
+    				<input type="password" name="pw_check" id="pw_check" autocomplete="off" required>
+    				<label for="pw_check">비밀번호 확인</label>
+    			</div> -->
+    			<div class="btn-area">
+    				<button id="btn" type="submit">계정 만들기</button>
+    			</div>
+    		</form>
+    		<div class="caption">
+    			<span class="caption_login">이미 계정이 있나요?</span>
+    			<a href="login.html">로그인</a>
+    		</div>
+    	</section>
+    </div>
+
+	<script src="login.js"></script>
+</body>
+
+</html>
