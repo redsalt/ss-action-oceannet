@@ -15,15 +15,21 @@ $count = 0;
 // $db_host = 'localhost:3306';
 // $db_username = 'badqmdlx_test_ss';
 // $db_password = 'seashepherd';
-$db_host = 'localhost';
-$db_username = 'badqmdlx_test_ss';
-$db_password = 'seashepherd';
-$db_dbname = 'badqmdlx_test_ss';
+// $db_host = 'localhost';
+// $db_username = 'badqmdlx_test_ss';
+// $db_password = 'seashepherd';
+// $db_dbname = 'badqmdlx_test_ss';
+
+define('_DB_host', 'localhost');
+define('_DB_username', 'badqmdlx_test_ss');
+define('_DB_password', 'seashepherd');
+define('_DB_name', 'badqmdlx_test_ss');
 
 // ==================================================================
 // Check connection
 
-$conn = mysqli_connect($db_host,$db_username,$db_password,$db_dbname);
+// $conn = mysqli_connect($db_host,$db_username,$db_password,$db_dbname);
+$conn = mysqli_connect(_DB_host, _DB_username, _DB_password, _DB_name);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -51,7 +57,7 @@ else {
 
 function getLocationDB() {
     
-    $conn = mysqli_connect($db_host,$db_username,$db_password,$db_dbname);
+    $conn = mysqli_connect(_DB_host, _DB_username, _DB_password, _DB_name);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -112,7 +118,7 @@ function registerLocation($data) {
     //     echo "Connected to MySQL ... ";
     // }
 
-    $con = mysqli_connect($db_host,$db_username,$db_password,$db_dbname);
+    $conn = mysqli_connect(_DB_host, _DB_username, _DB_password, _DB_name);
 
     // Check connection
     if (mysqli_connect_errno()) {
@@ -128,17 +134,18 @@ function registerLocation($data) {
     $lon = $data[1];
     
     $sql_insert = "INSERT INTO location(loc_lat, loc_lon) VALUES($lat, $lon)";
-    $result = $con->query($sql_insert);
+    $result = $conn->query($sql_insert);
     // echo "sql result: " . $result  . " ... ";
 
     if ($result === TRUE) {
         echo "register_location: " . $lat . ", " . $lon . " ... ";
         echo "New record created successfully ... ";
-        $con->close();
+        $conn->close();
         return 0;
     } elseif ($result === FALSE) {
         echo "[Error] sql: " . $sql_insert . " ... ";
-        echo "[Error] code: " . $con->error . " ... ";
+        echo "[Error] code: " . $conn->error . " ... ";
+        $conn->close();
         return 1;
     }
 
