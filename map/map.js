@@ -7,28 +7,59 @@
 //     }
 // });
 
-
 // ==================================================================
-// CREATE A MAP
+// INIT.
 
-var mapContainer = document.getElementById('map'),
+// create map
+var map; 
+var mapContainer;
+var mapOption; 
+var locPosition;
+
+// information window
+var infowindow;
+
+// marker
+var marker;
+
+// address and coordinates
+var geocoder;
+
+function initVariables(){
+    
+    var mapContainer = document.getElementById('map'),
     mapOption = {
         center: new kakao.maps.LatLng(37.56727, 126.97733),
         level: 13,
         mapTypeId : kakao.maps.MapTypeId.ROADMAP
     }; 
 
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+    map = new kakao.maps.Map(mapContainer, mapOption); 
 
+    locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
 
+    // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+    infowindow = new kakao.maps.InfoWindow({zindex:1});
+    
+    marker = new kakao.maps.Marker({
+        draggable : true,
+        map: map, 
+        position: locPosition
+    });
+
+    // CONVERT BETWEEN ADDRESS AND COORDINATE
+    geocoder = new kakao.maps.services.Geocoder();
+
+    console.log("initialised.");
+}
+
+initVariables();
 
 // ==================================================================
 // ZOOM CONTROL
 
 var zoomControl = new kakao.maps.ZoomControl();
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-
 
 // ==================================================================
 // GEOLOCATION
@@ -42,19 +73,21 @@ function currentLocation() {
             var lat = position.coords.latitude,
                 lon = position.coords.longitude;
             
-            var locPosition = new kakao.maps.LatLng(lat, lon), 
+            locPosition = new kakao.maps.LatLng(lat, lon), 
                 message = '<span style="padding:5px;margin:auto;text-align:center;">Here?</span>';
                 
-            displayMarker(locPosition, message);
+            // displayMarker(locPosition, message);
+            getDetailAddressHTML(locPosition);
                 
           });
         
     } else { // IMPOSSIBLE TO GET THE GEOLOCATION
         
-        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+        locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
             message = 'no geolocation'
             
-        displayMarker(locPosition, message);
+        // displayMarker(locPosition, message);
+        getDetailAddressHTML(locPosition);
     }
 
 }
@@ -63,17 +96,15 @@ function currentLocation() {
 // ==================================================================
 // INFO WINDOW
 
-var infowindow;
-
 function displayInfowindow(message) {
     
     var iwContent = message,    // message
         iwRemoveable = false;
 
-    infowindow = new kakao.maps.InfoWindow({
-        content : iwContent,
-        removable : iwRemoveable
-    });
+    // infowindow = new kakao.maps.InfoWindow({
+    //     content : iwContent,
+    //     removable : iwRemoveable
+    // });
     
     // open the window above the marker
     infowindow.open(map, marker);
@@ -84,15 +115,15 @@ function displayInfowindow(message) {
 // ==================================================================
 // MARKER
 
-var marker;
-
 function displayMarker(locPosition, message) {
 
-    marker = new kakao.maps.Marker({
-        draggable : true,
-        map: map, 
-        position: locPosition
-    });
+    // marker = new kakao.maps.Marker({
+    //     draggable : true,
+    //     map: map, 
+    //     position: locPosition
+    // });
+
+    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
     
     kakao.maps.event.addListener(marker, 'dragstart', markerDragStart);
     kakao.maps.event.addListener(marker, 'dragend', markerDragEnd);
@@ -137,15 +168,71 @@ function mapClick(mouseEvent) {
     // displayMsginfo(mouseEvent.latLng.toString());
     // console.log(mouseEvent.latLng.toString());
     // console.log(marker.getPosition());
-    marker.setPosition(mouseEvent.latLng);
-    markerMoved();
+    
+    // marker.setPosition(mouseEvent.latLng);
+    // markerMoved();
+
+    // address information
+    getDetailAddressHTML(mouseEvent.latLng);
 }
 
+function getDetailAddressHTML(latLng) {
 
+    searchDetailAddrFromCoords(latLng, function(result, status) {
+
+        if (status === kakao.maps.services.Status.OK) {
+            
+            var detailAddr = !!result[0].road_address ? '<div>도로명: ' + result[0].road_address.address_name + '</div>' : '';
+            detailAddr += '<div>지번: ' + result[0].address.address_name + '</div>';
+            
+            // var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
+            var content = '<div class="bAddr">' + detailAddr + '</div>';
+            console.log(content);
+
+            // 마커를 클릭한 위치에 표시합니다 
+            marker.setPosition(latLng);
+            marker.setMap(map);
+
+            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
+        }   
+    });
+}
+
+// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'idle', function() {
+    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+});
+
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청합니다
+    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+}
+
+function searchDetailAddrFromCoords(coords, callback) {
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+function displayCenterInfo(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        var infoDiv = document.getElementById('centerAddr');
+
+        for(var i = 0; i < result.length; i++) {
+            // 행정동의 region_type 값은 'H' 이므로
+            if (result[i].region_type === 'H') {
+                infoDiv.innerHTML = result[i].address_name;
+                break;
+            }
+        }
+    }    
+}
 
 // ==================================================================
 // REGISTER MARKER LOCATION
-
+console.log("REGISTER MARKER LOCATION");
 var reg = document.getElementById('btnReg');
 
 if(reg){
@@ -162,11 +249,12 @@ function registerLocation() {
     displayRegisteredMarker(pos);
     
     $.ajax({
-        url: 'functions.php',
+        url: './map/functions.php',
         type: 'post',
         data: { "callFunc1": [pos.getLat(), pos.getLng()]},
         success: function(response) {
-            //alert(response);
+            // alert(response);
+            // console.log("registerLocation(), response:");
             console.log(response);
         }
     });

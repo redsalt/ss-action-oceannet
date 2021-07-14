@@ -20,16 +20,16 @@ if ($conn->connect_error) {
     $row = mysqli_fetch_array($result);
     $row['email'];
 
-    foreach($row as $key => $r) {
-        echo "{$key} : {$r} <br>";
-    }
+    // foreach($row as $key => $r) {
+    //     echo "{$key} : {$r} <br>";
+    // }
     
     if ($row['email'] == $email) {
         // session_start();
         $_SESSION['userId'] = $row['email'];
-        print_r($_SESSION);
-        echo "<br>";
-        echo $_SESSION['userId'];
+        // print_r($_SESSION);
+        // echo "<br>";
+        // echo $_SESSION['userId'];
 
     ?>
         <script>

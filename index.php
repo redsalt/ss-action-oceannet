@@ -20,6 +20,7 @@ require_once __DIR__ . '/map/functions.php';
     <!-- <link rel="stylesheet" href="css/mobile.css" media="screen (mid-width:512px) and (max-width: 1024px)" rel="stylesheet"> -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -275,23 +276,28 @@ require_once __DIR__ . '/map/functions.php';
     	
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=52602574ee61be6c3643b3abb7cbbfe4&libraries=services,clusterer,drawing"></script>
     <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75eca38292b44cb8e486cb4eb3577dbd&libraries=services,clusterer,drawing"></script> -->
-    <script src="./map/map.js"></script>
     	
     <?php if (isset($_SESSION['userId'])) {?>
 
       <div class="map__info">
         <p class="map__info__id"> <?php echo "{$_SESSION['userId']}"; ?> </p>
+        <div class="hAddr">
+          <span class="title">현재위치</span>
+          <span id="centerAddr"></span>
+        </div>
         <p class="map__info__caption">좌표</p>
         <p class="map__info__msg">&nbsp;</p>
 
         <div class="map__reg">
           <input type="button" id="btnReg" value="등록하기">
+          <script>console.log("btnReg");</script>
         </div>
       </div>
-      
-      <script>currentLocation();</script>
             
       <?php } ?>
+
+      <script src="./map/map.js"></script>      
+      <script>currentLocation();</script>
         
 	</div>
 

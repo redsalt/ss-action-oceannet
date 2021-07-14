@@ -102,22 +102,51 @@ function initDB() {
 
 function registerLocation($data) {
     
-    $db = new mysqli($db_host,$db_username,$db_password,$db_dbname);
+    // $db = new mysqli($db_host,$db_username,$db_password,$db_dbname);
+    
+    // // Check connection
+    // if ($db -> connect_errno) {
+    //     echo "Failed to connect to MySQL: " . $db -> connect_error;
+    //     exit();
+    // } else {
+    //     echo "Connected to MySQL ... ";
+    // }
+
+    $con = mysqli_connect($db_host,$db_username,$db_password,$db_dbname);
+
+    // Check connection
+    if (mysqli_connect_errno()) {
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        exit();
+    } else {
+        echo "Connected to MySQL (2) ... ";
+    }
+
+    // $db = mysqli_select_db($con, $db_dbname);
     
     $lat = $data[0];
     $lon = $data[1];
     
     $sql_insert = "INSERT INTO location(loc_lat, loc_lon) VALUES($lat, $lon)";
+    $result = $con->query($sql_insert);
+    // echo "sql result: " . $result  . " ... ";
 
-    if ($db->query($sql_insert) === TRUE) {
-        echo "New record created successfully";
-        $db->close();
-    } else {
-        echo "Error: " . $sql . "<br>" . $db->error;
+    if ($result === TRUE) {
+        echo "register_location: " . $lat . ", " . $lon . " ... ";
+        echo "New record created successfully ... ";
+        $con->close();
+        return 0;
+    } elseif ($result === FALSE) {
+        echo "[Error] sql: " . $sql_insert . " ... ";
+        echo "[Error] code: " . $con->error . " ... ";
+        return 1;
     }
-    
-    echo "register_location: " . $lat . ", " . $lon;
-    return 0;
+
+    // Perform query 
+    // if ($result = $db -> query("SELECT * FROM location")) {
+    //     echo "Returned rows are: " . $result->loc_lat;
+    // }
+    return 2;
 }
 
 /*
@@ -170,7 +199,9 @@ echo json_encode($aResult);
 // }
 
 if (isset($_POST['callFunc1'])) {
-    echo registerLocation($_POST['callFunc1']);
+    $result = registerLocation($_POST['callFunc1']);
+    echo "_POST['callFunc1'], result: ";
+    echo $result . " ... ";
 }
 
 ?>
