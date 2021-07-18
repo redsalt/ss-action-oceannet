@@ -272,32 +272,31 @@ require_once __DIR__ . '/map/functions.php';
 	
 	<div class="map">
 
+  <!-- show the map -->
+
     <div id="map"></div>
     	
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=52602574ee61be6c3643b3abb7cbbfe4&libraries=services,clusterer,drawing"></script>
     <!-- <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75eca38292b44cb8e486cb4eb3577dbd&libraries=services,clusterer,drawing"></script> -->
+
+    <script src="./map/map.js"></script>
+
+    <!-- -------------------------------------------------------------------------------- -->
+    <!-- if an account is logged in -->
     	
     <?php if (isset($_SESSION['userId'])) {?>
 
-      <div class="map__info">
-        <p class="map__info__id"> <?php echo "{$_SESSION['userId']}"; ?> </p>
-        <div class="hAddr">
-          <span class="title">현재위치</span>
-          <span id="centerAddr"></span>
-        </div>
-        <p class="map__info__caption">좌표</p>
-        <p class="map__info__msg">&nbsp;</p>
-
-        <div class="map__reg">
-          <input type="button" id="btnReg" value="등록하기">
-          <script>console.log("btnReg");</script>
-        </div>
-      </div>
+      <a class="nav-link" href="./account_management.php">REGISTER</a>
             
       <?php } ?>
 
-      <script src="./map/map.js"></script>      
+      <!-- END OF ACCOUNT SECTION -->
+
+      <!-- -------------------------------------------------------------------------------- -->
+
+      <script>importRegisteredLocation();</script>
       <script>currentLocation();</script>
+      <script>setFlagMainpage(true);</script>
         
 	</div>
 
