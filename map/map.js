@@ -36,6 +36,10 @@ var geocoder;
 
 // current information
 var currentAddress;
+// road name
+var currentAddressRoad;
+// lot number
+var currentAddressLot;
 
 // registered marker flag
 var flagSelectedRegisteredMarker;
@@ -59,6 +63,10 @@ function setRegisteredMarker(flag) {flagSelectedRegisteredMarker=flag;}
 function getRegisteredMarker() { return flagSelectedRegisteredMarker; }
 function setFlagMainpage(flag) { flagMainpage=flag; }
 function getFlagMainpage() { return flagMainpage; }
+function setCurrentAddressRoad(addr_road) { currentAddressRoad = addr_road; }
+function getCurrentAddressRoad() { return currentAddressRoad; }
+function setCurrentAddressLot(addr_lot) { currentAddressLot = addr_lot; }
+function getCurrentAddressLot() { return currentAddressLot; }
 
 function initVariables(){
     
@@ -190,7 +198,7 @@ function markerDragEnd() {
 
 function markerMoved() {
     var latlng = marker.getPosition();
-    displayMsginfo(latlng.toString());
+    // displayMsginfo(latlng.toString());
     
     // console.log(latlng);
     infowindow.setPosition(latlng);
@@ -200,7 +208,7 @@ function markerMoved() {
 function displayMsginfo(message) {
     // document.getElementsByClassName('map__info__msg')[0].textContent = message;
     document.querySelector('.map__info__msg').textContent = message;
-    // console.log(message);
+    console.log('displayMsginfo: ' + message);
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -220,6 +228,8 @@ function setCurrentInformation() {
     infowindow.setContent(currentAddress);
     infowindow.open(map, marker);
 
+    displayCurrentAddress();
+
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function() {
 
@@ -235,6 +245,14 @@ function setCurrentInformation() {
     });
 }
 
+function displayCurrentAddress() {
+
+    var address_text = getCurrentAddressRoad();
+    if (address_text != '') { address_text += ', ' + getCurrentAddressLot();
+    } else { address_text = getCurrentAddressLot(); }
+    displayMsginfo(address_text);
+}
+
 // ---------------------------------------------------------------------------------------------
 // CLICK ON MAP
 // NEW MARKER (MAIN MARKER) TO REGISTER
@@ -245,7 +263,7 @@ kakao.maps.event.addListener(map, 'click', mapClick);
 function mapClick(mouseEvent) {
 
     if (!getFlagMainpage()) {
-        
+
         locPosition = mouseEvent.latLng;
         getDetailAddressHTML(mouseEvent.latLng);
         // console.log(address_text);    
@@ -258,11 +276,19 @@ function getDetailAddressHTML(latLng) {
 
         if (status === kakao.maps.services.Status.OK) {
             
-            var detailAddr = !!result[0].road_address ? '<div>도로명: ' + result[0].road_address.address_name + '</div>' : '';
+            // var detailAddr = !!result[0].road_address ? '<div>도로명: ' + result[0].road_address.address_name + '</div>' : '';
+            var detailAddr = '';
+            if (!!result[0].road_address) {
+                detailAddr = '<div>도로명: ' + result[0].road_address.address_name + '</div>';
+                setCurrentAddressRoad(result[0].road_address.address_name);
+            } else { setCurrentAddressRoad(''); }
+
             detailAddr += '<div>지번: ' + result[0].address.address_name + '</div>';
+            setCurrentAddressLot(result[0].address.address_name);
             
             // var content = '<div class="bAddr">' + '<span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
-            currentAddress = '<div class="bAddr">' + detailAddr + '</div>';
+            // currentAddress = '<div class="bAddr">' + detailAddr + '</div>';
+            setCurrentAddress('<div class="bAddr">' + detailAddr + '</div>');
             setCurrentInformation();
             console.log(currentAddress);
 
@@ -348,7 +374,7 @@ function placesSearchCB (data, status, pagination) {
         var bounds = new kakao.maps.LatLngBounds();
 
         for (var i=0; i<data.length; i++) {
-            displayMarker(data[i]);    
+            displayMarkerPlaces(data[i]);    
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }       
 
@@ -358,7 +384,7 @@ function placesSearchCB (data, status, pagination) {
 }
 
 // 지도에 마커를 표시하는 함수입니다
-function displayMarker(place) {
+function displayMarkerPlaces(place) {
     
     // 마커를 생성하고 지도에 표시합니다
     var marker = new kakao.maps.Marker({
@@ -369,11 +395,15 @@ function displayMarker(place) {
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function() {
 
+        setCurrentAddressLot(place.address_name);
+        setCurrentAddressRoad(place.road_address_name);
+        displayCurrentAddress();
+
         setRegisteredMarker(false);
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent('<div style="padding:5px;font-size:12px;color:black;opacity:0.7">' + place.place_name + '</div>');
         infowindow.open(map, marker);
-        // locPosition = marker.getPosition();
+
         setLocationCoordinates(marker.getPosition());
         // console.log(locPosition);
     });
@@ -406,7 +436,8 @@ function registerLocation() {
 
     if (!getRegisteredMarker()) {
         var msg = "lat: " + pos.getLat() + ", lng: " + pos.getLng();
-        displayMsginfo(msg);
+        // displayMsginfo(msg);
+        console.log(msg);
         displayRegisteredMarker(pos);
         
         $.ajax({

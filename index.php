@@ -270,7 +270,7 @@ require_once __DIR__ . '/map/functions.php';
     <!-- MAP -->
     <!-- ============================================================================== -->
 	
-	<div class="map">
+	<div class="container_map">
 
   <!-- show the map -->
 
@@ -286,7 +286,7 @@ require_once __DIR__ . '/map/functions.php';
     	
     <?php if (isset($_SESSION['userId'])) {?>
 
-      <a class="nav-link" href="./account_management.php">REGISTER</a>
+      <a class="nav-link" href="./map_reg.php">등록하기</a>
             
       <?php } ?>
 

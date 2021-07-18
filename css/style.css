@@ -528,16 +528,24 @@ img { width: 100%; height: auto; }
 /* map */
 /* ================================================================================================================ */
 
-.map {
+.container_map {
   display: flex; justify-content: center; align-items: center; flex-direction: column;
 	height: 100vh;
 	background: black;
 }
 
-.map h1 {
+.container_map h1 {
 	font-size: 32px; color: #ffff;
 	text-align: center;
-	margin-bottom: 60px;
+}
+
+.container_map p {
+  text-align: center;
+  font-size: 20px;
+}
+
+.map__header {
+  margin: 20px;
 }
 
 #map {
@@ -545,34 +553,56 @@ img { width: 100%; height: auto; }
   position:relative; overflow:hidden;
 }
 
-.map__info {
+.map__user {
   display: flex; justify-content: center; align-items: center; flex-direction: column;
-  width: 80%; margin-top: 30px;
+  width: 80%; margin-top: 50px;
 }
 
-.map__info > p { margin-top: 5px; }
-.map__info__id { font-weight: 400; margin-bottom: 20px;}
-.map__info__caption { font-weight: 200; }
-.map__info__msg { font-weight: 200; }
-
-.map__reg { 
-  display: flex; justify-content: center; align-items: center;
-  width: 80%; max-width: 600px; margin-top: 20px; 
+.map__form {
+  display: flex; justify-content: center; align-items: center; flex-direction: column;
+  width: 100%;
 }
-.map__reg > input {
-	width: 200px; height: 40px;
+
+.btn-area {margin-top: 30px;}
+.btn-area button {
+	width: 100%; height: 40px;
 	background: #166cea; color: #fff;
 	font-size: 15px;
 	border: none; border-radius: 25px;
 	cursor: pointer;
 }
 
+
+.map__info {
+  display: flex; justify-content: center; align-items: center; flex-direction: column;
+  width: 100%; height: 100%; margin-top: 25px;
+}
+
+.map__info > p { font-weight: 400; color: blanchedalmond; font-size: 15px; margin-bottom: 10px; line-height: 1.2; }
+/* .map__info__id { font-weight: 400; margin-bottom: 20px;} */
+/* .map__info__caption { font-weight: 200; } */
+/* .map__info__msg { font-weight: 200; color: cornsilk; font-size: 12px; } */
+
+.map__reg { 
+  display: flex; justify-content: center; align-items: center;
+  width: 80%; max-width: 150px;
+}
+.map__reg input {
+	width: 100%; height: 40px;
+	background: #166cea; color: #fff;
+	font-size: 15px;
+	border: none; border-radius: 25px;
+	cursor: pointer;
+  margin-bottom: 10px;
+}
+
 /* below the map */
 .hAddr { 
   /* position: absolute;  */
   left:10px;top:10px; border-radius: 2px; 
-  background:rgba(50,50,50,0.5); 
+  /* background:rgba(50,50,50,0.5);  */
   z-index:1; padding:5px; 
+  height: 50px; max-width: 300px;
 }
 /* on the map */
 .bAddr { 
@@ -644,8 +674,12 @@ img { width: 100%; height: auto; }
 .p4-box__content__numbers > .numbers__item { border-style: solid; border-width: 5px; border-color: rgb(255,0,0); }
 .p4-box__content__join { border-style: solid; border-width: 5px; border-color: rgb(255,0,255); } */
 
-/* .map { border-style: solid; border-width: 5px; border-color: palevioletred; }
+/* .map { border-style: solid; border-width: 5px; border-color: palevioletred; } */
+/* .map__header { border-style: solid; border-width: 5px; border-color: blueviolet; }
+.map__user { border-style: solid; border-width: 5px; border-color: blue; }
+.map__form { border-style: solid; border-width: 5px; border-color: yellow; }
 .map__info { border-style: solid; border-width: 5px; border-color: brown; }
+.map__info__msg { border-style: solid; border-width: 5px; border-color: goldenrod; }
 .map__reg { border-style: solid; border-width: 5px; border-color: green; }
 #map { border-style: solid; border-width: 5px; border-color: red; } */
 
