@@ -250,7 +250,8 @@ function displayCurrentAddress() {
     var address_text = getCurrentAddressRoad();
     if (address_text != '') { address_text += ', ' + getCurrentAddressLot();
     } else { address_text = getCurrentAddressLot(); }
-    displayMsginfo(address_text);
+
+    if (!getFlagMainpage()) {displayMsginfo(address_text);}
 }
 
 // ---------------------------------------------------------------------------------------------
