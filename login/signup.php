@@ -22,11 +22,13 @@ if ($conn->connect_error) {
     //     )";
 
     $email = $_POST['email'];
+    $nickname = $_POST['nickname'];
+    if ($nickname == null) { $nickname = $email; }
 
     $sql = "
         INSERT INTO account
-        (email)
-        VALUES('{$email}')";
+        (email, nickname)
+        VALUES('{$email}', '{$nickname}')";
     
     echo $sql;
     $result = mysqli_query($conn, $sql);

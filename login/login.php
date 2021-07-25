@@ -18,7 +18,7 @@ if ($conn->connect_error) {
     $result = mysqli_query($conn, $sql);
     
     $row = mysqli_fetch_array($result);
-    $row['email'];
+    // $row['email'];
 
     // foreach($row as $key => $r) {
     //     echo "{$key} : {$r} <br>";
@@ -26,7 +26,8 @@ if ($conn->connect_error) {
     
     if ($row['email'] == $email) {
         // session_start();
-        $_SESSION['userId'] = $row['email'];
+        // $_SESSION['userId'] = $row['email'];
+        $_SESSION['userId'] = $row['nickname'];
         // print_r($_SESSION);
         // echo "<br>";
         // echo $_SESSION['userId'];
